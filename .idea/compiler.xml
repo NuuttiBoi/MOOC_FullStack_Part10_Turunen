@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="expo-gradle-plugin.expo-max-sdk-override-plugin" target="11" />
+      <module name="expo-gradle-plugin.expo-max-sdk-override-plugin.main" target="11" />
+      <module name="expo-gradle-plugin.expo-max-sdk-override-plugin.test" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
