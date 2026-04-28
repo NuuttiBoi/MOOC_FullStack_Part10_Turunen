@@ -3,6 +3,10 @@ import * as yup from 'yup'
 import { View, TextInput, Pressable, StyleSheet } from 'react-native'
 import Text from './Text'
 import theme from "../theme";
+import {useSignIn} from "../hooks/useSignIn";
+import { useNavigate } from 'react-router-native';
+import {useState} from "react";
+
 
 const initialValues = {
     username: '',
@@ -41,9 +45,21 @@ const styles = StyleSheet.create({
     },
 })
 const SignIn = () => {
-    const onSubmit = (values) => {
-        console.log(values)
-    }
+    const navigate = useNavigate();
+    const [signIn] = useSignIn();
+    const [errorMessage, setErrorMessage] = useState(null);
+    const onSubmit = async (values) => {
+        const { username, password } = values;
+        try {
+            setErrorMessage(null)
+            const { data } = await signIn({ username, password });
+            navigate('/');
+            console.log(data);
+        } catch (e) {
+            setErrorMessage('wrong username or password')
+            console.log(e);
+        }
+    };
     const formik = useFormik({
         initialValues,
         validationSchema,
@@ -85,6 +101,7 @@ const SignIn = () => {
                     {formik.errors.password}
                 </Text>
             )}
+            {errorMessage && (<Text color="error">{errorMessage}</Text>)}
             <Pressable style={styles.button} onPress={formik.handleSubmit}>
                 <Text color="white" fontWeight="bold" style={styles.buttonText}>
                     Sign in
